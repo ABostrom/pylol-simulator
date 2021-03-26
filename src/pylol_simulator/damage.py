@@ -29,16 +29,21 @@ def basic_attack(base_stats:ChampionBaseStats, bonus_stats:Stats, champion_lvl:i
     global last_time
     global time_since_last_attack
 
+    #reset the swing timer if this is a new call.
+    if time <= 0:
+        last_time = 0
+        time_since_last_attack = 0
+
     #keep an internal record of the swing timer.
     delta_time = time - last_time
     time_since_last_attack += delta_time
 
     # need to check the swing timer, against this frequency
     frequency = 1.0 / (base_stats.aspd * (1 + bonus_stats.aspd / 100))
-    print(frequency)
 
     # if its been longer than our freqency since our last attack, we're good to go.
-    if time_since_last_attack >=  frequency:
+    # or if time is 0 then we can attack instantly.
+    if time_since_last_attack >=  frequency or time_since_last_attack == 0:
          # basic attacks are 100% of total ad.
         damage = base_stats.ad + bonus_stats.ad
 
