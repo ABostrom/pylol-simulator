@@ -16,11 +16,11 @@ Magic Resistance        (mr)
 Health                  (hp)
 '''
 
-class Stats:
-    def __init__(self, ad, ap, as, cs, csd, ar, mr, hp) -> None:
+class Stats(object):
+    def __init__(self, ad=0, ap=0, aspd=0, cs=0, csd=0, ar=0, mr=0, hp=0) -> None:
         self.ad = ad
         self.ap = ap
-        self.as = as
+        self.aspd = aspd
         self.cs = cs
         self.csd = csd
         self.ar = ar
@@ -29,18 +29,22 @@ class Stats:
 
 class ChampionBaseStats(Stats):
 
-    def __init__(self, ad, ap, as, cs, csd, ar, mr, hp,
-                ad_growth, ap_growth, as_growth, ar_growth, mr_growth, hp_growth) -> None:
+    def __init__(self, ad=0, ap=0, aspd=0, cs=0, csd=0, ar=0, mr=0, hp=0,
+                ad_growth=0, ap_growth=0, aspd_growth=0, ar_growth=0, mr_growth=0, hp_growth=0) -> None:
 
-        super.__init__(ad, ap, as, cs, csd, ar, mr, hp)
+        super().__init__(ad, ap, aspd, cs, csd, ar, mr, hp)
 
         # statistics that govern a champions growth
         self.ad_growth= ad_growth
         self.ap_growth = ap_growth
-        self.as_growth = as_growth
+        self.aspd_growth = aspd_growth
         self.ar_growth = ar_growth
         self.mr_growth = mr_growth
         self.hp_growth = hp_growth
 
         #TODO: might need to represent champion level.
 
+
+
+def growth_formula(base, growth, level):
+    return base + growth * (level-1) * (0.7025 + 0.0175 * (level-1))

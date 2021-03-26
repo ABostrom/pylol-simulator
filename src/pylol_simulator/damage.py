@@ -21,8 +21,32 @@ def calculate_mitigation(damage:float, resist:float):
 
 
 
+time_since_last_attack = 0
+last_time = 0
+
 def basic_attack(base_stats:ChampionBaseStats, bonus_stats:Stats, champion_lvl:int=1, time:float=0):
 
-    damage = base_stats.as
+    global last_time
+    global time_since_last_attack
+
+    #keep an internal record of the swing timer.
+    delta_time = time - last_time
+    time_since_last_attack += delta_time
+
+    # need to check the swing timer, against this frequency
+    frequency = 1.0 / (base_stats.aspd * (1 + bonus_stats.aspd / 100))
+    print(frequency)
+
+    # if its been longer than our freqency since our last attack, we're good to go.
+    if time_since_last_attack >=  frequency:
+         # basic attacks are 100% of total ad.
+        damage = base_stats.ad + bonus_stats.ad
+
+        #reset the swing timer.
+        time_since_last_attack = 0
+    else:
+        damage = 0
+    
+    last_time = time
 
     return Damage(physical_damage=damage)
