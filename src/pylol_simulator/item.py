@@ -1,14 +1,17 @@
+from __future__ import annotations
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from typing import Any
 
-
-from typing import Any
 from .stats import Stats
 
 
 class Item:
-    def __init__(self, name, cost, stat, passive=None) -> None:
+    def __init__(self, name, cost, stat, passives=None) -> None:
         self.name = name
         self.cost = cost
         self.stat = stat
+        self.passives = passives if passives != None else []
 
     def __str__(self) -> str:
         return f"{self.name} | {self.cost}g\n{self.stat}"
@@ -28,6 +31,7 @@ class Inventory:
 
 
     # forward the attributes from curent_stats so inventory can be used as a stats object
+    # TODO: this feels hacky
     def __getattribute__(self, name: str) -> Any:
         try:
             return super().__getattribute__(name)
@@ -36,3 +40,8 @@ class Inventory:
 
 Dagger = Item("Dagger", 300, Stats(aspd=25))
 Long_Sword = Item("Long Sword", 350, Stats(ad=10))
+
+from .modifiers import SteelTipped
+RecurveBow = Item("Recurve Bow", 1000, Stats(aspd=25), passives=[SteelTipped()])
+
+

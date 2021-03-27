@@ -5,8 +5,10 @@
 #     PHYSICAL = 1
 #     MAGIC = 2
 
-from .champion import Champion
-from .item import Inventory
+from __future__ import annotations
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from .summoner import Summoner
 
 class Damage:
 
@@ -15,7 +17,9 @@ class Damage:
         self.physical = physical_damage
         self.magic = magic_damage
 
-    
+    def __add__(self, other):
+        return Damage(self.true+other.true, self.physical+other.physical, self.magic+other.magic)
+
     def get_total_damage(self):
         return self.true + self.physical + self.magic
         
@@ -29,18 +33,19 @@ def calculate_mitigation(damage:float, resist:float):
 def calculate_apsd(base_aspd, bonus_aspd):
     return base_aspd * (1 + bonus_aspd / 100)
 
-def basic_attack(champion:Champion, inventory: Inventory):
+def basic_attack(summoner: Summoner):
     # basic attacks are 100% of total ad.
 
     # TODO: Crit chance/Crit Damage
-    damage = champion.get_ad() + inventory.current_stats.ad
+    # TODO: trigger on hit passives
+    damage = summoner.ad #+ summoner.
 
     return Damage(physical_damage=damage)
 
 
 time_since_last_attack = 0
 last_time = 0
-def swing_timer(champion:Champion, inventory:Inventory, time:float=0):
+def swing_timer(summoner: Summoner, time:float=0):
 
     global last_time
     global time_since_last_attack
@@ -55,13 +60,14 @@ def swing_timer(champion:Champion, inventory:Inventory, time:float=0):
     time_since_last_attack += delta_time
 
     # need to check the swing timer, against this frequency
-    frequency = 1.0 / calculate_apsd(champion.get_base_aspd(), inventory.aspd + champion.get_bonus_aspd())
+    # TODO: tidy up this with bonus aspd from summoner.
+    frequency = 1.0 / calculate_apsd(summoner.base_aspd, summoner.aspd)
 
     # if its been longer than our freqency since our last attack, we're good to go.
     # or if time is 0 then we can attack instantly.
     if time_since_last_attack >=  frequency or time_since_last_attack == 0:
 
-        damage = basic_attack(champion, inventory)
+        damage = basic_attack(summoner)
         #reset the swing timer.
         time_since_last_attack = 0
     else:
