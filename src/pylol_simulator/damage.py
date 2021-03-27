@@ -9,6 +9,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from .summoner import Summoner
+    from.item import Inventory
 
 class Damage:
 
@@ -38,9 +39,11 @@ def basic_attack(summoner: Summoner):
 
     # TODO: Crit chance/Crit Damage
     # TODO: trigger on hit passives
-    damage = summoner.ad #+ summoner.
+    basic = Damage(physical_damage=summoner.ad) #+ summoner.
+    passives = summoner.inventory.get_all_unique_passives()
+    output = basic + sum([passive.on_basic_attack(summoner) for passive in passives], Damage())
 
-    return Damage(physical_damage=damage)
+    return output
 
 
 time_since_last_attack = 0

@@ -1,7 +1,10 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING
+from typing import List, TYPE_CHECKING
+
+from numpy.core.numeric import _outer_dispatcher
 if TYPE_CHECKING:
     from typing import Any
+    from .modifiers import Passive
 
 from .stats import Stats
 
@@ -30,6 +33,14 @@ class Inventory:
         self.current_stats = sum(map(lambda x: x.stat, self.items), Stats())
 
 
+    def get_all_unique_passives(self) -> List[Passive]:
+        out = set()
+        for item in self.items:
+            out.add(*item.passives)
+        return list(out)
+
+
+
     # forward the attributes from curent_stats so inventory can be used as a stats object
     # TODO: this feels hacky
     def __getattribute__(self, name: str) -> Any:
@@ -44,4 +55,5 @@ Long_Sword = Item("Long Sword", 350, Stats(ad=10))
 from .modifiers import SteelTipped
 RecurveBow = Item("Recurve Bow", 1000, Stats(aspd=25), passives=[SteelTipped()])
 
-
+from .modifiers import IcathianBite
+NashorsTooth = Item("Nashor's Tooth", 3000, Stats(ap=100, aspd=50), passives=[IcathianBite()])

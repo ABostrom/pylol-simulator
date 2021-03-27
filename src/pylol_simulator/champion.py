@@ -58,7 +58,6 @@ def growth_formula(level, growth):
 
 from functools import partial
 
-
 TargetDummy = partial(Champion, name="Target Dummy", hp=1000)
 
 # create a partial func1tion from the champion 

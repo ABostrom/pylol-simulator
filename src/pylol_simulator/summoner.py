@@ -13,6 +13,7 @@ class Summoner:
     def __init__(self, champion: Champion, inventory: Inventory) -> None:
         self.champion = champion
         self.inventory = inventory
+        self.current_hp = self.hp
 
     @property
     def ad(self):
