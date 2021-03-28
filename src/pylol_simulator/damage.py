@@ -7,6 +7,8 @@
 
 from __future__ import annotations
 from typing import TYPE_CHECKING
+
+from pylol_simulator.champion import TargetDummy
 if TYPE_CHECKING:
     from .summoner import Summoner
     from.item import Inventory
@@ -24,6 +26,8 @@ class Damage:
     def get_total_damage(self):
         return self.true + self.physical + self.magic
         
+    def __str__(self) -> str:
+        return f"Total:\t{self.get_total_damage()}\nTrue:\t{self.true}\nPhys:\t{self.physical}\nMagic:\t{self.magic}"
 
 
 # this formula is the same for armour and magic resistance
@@ -34,14 +38,14 @@ def calculate_mitigation(damage:float, resist:float):
 def calculate_apsd(base_aspd, bonus_aspd):
     return base_aspd * (1 + bonus_aspd / 100)
 
-def basic_attack(summoner: Summoner):
+def basic_attack(attacker: Summoner, defender: Summoner):
     # basic attacks are 100% of total ad.
 
     # TODO: Crit chance/Crit Damage
     # TODO: trigger on hit passives
-    basic = Damage(physical_damage=summoner.ad) #+ summoner.
-    passives = summoner.inventory.get_all_unique_passives()
-    output = basic + sum([passive.on_basic_attack(summoner) for passive in passives], Damage())
+    basic = Damage(physical_damage=attacker.ad) #+ summoner.
+    passives = attacker.inventory.get_all_unique_passives()
+    output = basic + sum([passive.on_basic_attack(attacker, defender) for passive in passives], Damage())
 
     return output
 

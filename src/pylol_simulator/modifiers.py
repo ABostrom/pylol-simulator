@@ -22,11 +22,15 @@ class Passive:
         return self.name == o.name and (self.unique or o.unique)
 
     def __hash__(self) -> int:
-        return hash(self.name, self.unique)
+        return hash((self.name, self.unique))
 
 '''Recurve Bow Passives'''
 
 class SteelTipped(Passive):
+
+    def __init__(self) -> None:
+        super().__init__("Steel Tipped", True)
+
     def on_basic_attack(self, attacker:Summoner, defender:Summoner):
         return Damage(physical_damage=15)
 
@@ -34,6 +38,9 @@ class SteelTipped(Passive):
 '''Nashor's Tooth Passives'''
 
 class IcathianBite(Passive):
+    def __init__(self) -> None:
+        super().__init__("Icathian Bite", True)
+
     def on_basic_attack(self, attacker:Summoner, defender:Summoner):
         return Damage(magic_damage = 15 + (attacker.ap * 0.2))
 

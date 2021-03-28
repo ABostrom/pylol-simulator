@@ -15,6 +15,7 @@ class Item:
         self.cost = cost
         self.stat = stat
         self.passives = passives if passives != None else []
+        print(self.passives)
 
     def __str__(self) -> str:
         return f"{self.name} | {self.cost}g\n{self.stat}"
@@ -26,10 +27,10 @@ class Item:
 class Inventory:
 
     # deliberately limit constructor to 6 items.
-    def __init__(self, item1: Item, item2: Item = None, item3: Item = None,
+    def __init__(self, item1: Item=None, item2: Item = None, item3: Item = None,
                  item4: Item = None, item5: Item = None, item6: Item = None) -> None:
 
-        self.items = filter(None, [item1, item2, item3, item4, item5, item6])
+        self.items = list(filter(None, [item1, item2, item3, item4, item5, item6]))
         self.current_stats = sum(map(lambda x: x.stat, self.items), Stats())
 
 
@@ -49,11 +50,37 @@ class Inventory:
         except:
             return self.current_stats.__dict__[name]
 
-Dagger = Item("Dagger", 300, Stats(aspd=25))
-Long_Sword = Item("Long Sword", 350, Stats(ad=10))
-
 from .modifiers import SteelTipped
+from .modifiers import IcathianBite
+
+'''AD Base Items'''
+Long_Sword = Item("Long Sword", 350, Stats(ad=10))
+Pickaxe = Item("Pickaxe", 875, Stats(ad=25))
+BFSword = Item("B. F. Sword", 1300, Stats(ad=40))
+
+'''AP Base Items'''
+AmplifyingTome = Item("Amplifying Tome", 350, Stats(ap=20))
+BlastingWand = Item("Blasting Wand", 850, Stats(ap=40))
+NeedlesslyLargeRod = Item("Needlessly Large Rod", 1300, Stats(ap=60))
+
+'''ASPD Base Items'''
+Dagger = Item("Dagger", 300, Stats(aspd=25))
 RecurveBow = Item("Recurve Bow", 1000, Stats(aspd=25), passives=[SteelTipped()])
 
-from .modifiers import IcathianBite
+'''Crit Chance'''
+CloakOfAgility = Item("Cloak of Agility", 600, Stats(cr=15))
+
+'''Hp'''
+RubyCrystal = Item("Ruby Crystal", 400, Stats(hp=150))
+GiantsBelt = Item("Giant's Belt", 900, Stats(hp=350))
+
+'''Armour '''
+ClothArmor = Item("Cloth Armor", 300, Stats(ar=15))
+ChainVest = Item("Chain Vest", 800, Stats(ar=40))
+
+'''Magic Resist'''
+NullMagicMantle = Item("Null-Magic Mantle", 450, Stats(mr=25))
+NegatronCloak = Item("Negatron Cloak", 900, Stats(mr=50))
+
+
 NashorsTooth = Item("Nashor's Tooth", 3000, Stats(ap=100, aspd=50), passives=[IcathianBite()])

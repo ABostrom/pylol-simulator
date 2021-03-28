@@ -29,7 +29,7 @@ class Stats(object):
         self.hp = hp
 
     def __str__(self) -> str:
-        return f"AD {self.ad}\tAP {self.ap}\nAR {self.ar}\tMR {self.mr}\nASPD {self.aspd}\tAH {self.ah}\n"
+        return f"AD   {self.ad}\tAP {self.ap}\nAR   {self.ar}\tMR {self.mr}\nASPD {self.aspd}\tAH {self.ah}\n"
 
     def __repr__(self) -> str:
         return str(self)

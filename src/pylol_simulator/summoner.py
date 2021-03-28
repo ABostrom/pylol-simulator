@@ -3,16 +3,17 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from .champion import Champion
-    from .item import Inventory
+
+from .item import Inventory
 #from .rune import Rune
 
 
 # TODO: this is a container for a Champion, Inventory and Runes
 class Summoner:
 
-    def __init__(self, champion: Champion, inventory: Inventory) -> None:
+    def __init__(self, champion: Champion, inventory: Inventory= None) -> None:
         self.champion = champion
-        self.inventory = inventory
+        self.inventory = inventory if inventory is not None else Inventory()
         self.current_hp = self.hp
 
     @property
@@ -21,7 +22,7 @@ class Summoner:
 
     @property
     def ap(self):
-        return self.champion.ad + self.inventory.ad
+        return self.champion.ap + self.inventory.ap
 
     @property
     def base_aspd(self):
@@ -54,3 +55,8 @@ class Summoner:
     @property
     def hp(self):
         return self.champion.hp + self.inventory.hp
+
+
+    def __str__(self) -> str:
+        return f"{self.champion.name}@{self.champion.level}\nAD   {self.ad}\tAP {self.ap}\nAR   {self.ar}\tMR {self.mr}\nASPD {self.aspd}\tAH {self.ah}\n"
+
