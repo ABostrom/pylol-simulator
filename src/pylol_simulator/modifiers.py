@@ -116,6 +116,7 @@ class GiantSlayer(Passive):
         super().__init__("Giant Slayer", True)
 
     def on_basic_attack(self, attacker:Summoner, defender:Summoner):
-        damage = min(int(max(defender.hp - attacker.hp, 0) / 100), 15) * 0.075 * defender.hp
+        health_diff = min(max(defender.hp - attacker.hp, 0), 2000) # clamp to 2000 health max difference
+        damage = int(health_diff / 100) * 0.0075 * health_diff
         return Damage(physical_damage=damage)
     
