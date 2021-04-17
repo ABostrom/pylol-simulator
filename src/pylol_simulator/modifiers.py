@@ -74,8 +74,8 @@ class Siphon(Passive):
 '''Sheen Passive'''
 class SpellBlade(Passive):
 
-    def __init__(self, name:str, unique:bool) -> None:
-        super().__init__(name, unique)
+    def __init__(self) -> None:
+        super().__init__("Spell Blade", True)
         self.active = False
 
     def on_ability_used(self): 

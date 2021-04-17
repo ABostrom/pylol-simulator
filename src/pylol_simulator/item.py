@@ -69,7 +69,7 @@ Dagger = Item("Dagger", 300, Stats(aspd=25))
 RecurveBow = Item("Recurve Bow", 1000, Stats(aspd=25), passives=[SteelTipped()])
 
 '''Crit Chance'''
-CloakOfAgility = Item("Cloak of Agility", 600, Stats(cr=15))
+CloakOfAgility = Item("Cloak of Agility", 600, Stats(cs=15))
 
 '''Hp'''
 RubyCrystal = Item("Ruby Crystal", 400, Stats(hp=150))

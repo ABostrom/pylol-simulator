@@ -10,7 +10,7 @@ from functools import partial
 
 class Champion:
 
-    def __init__(self, name, level=1, ad=0, ap=0,base_aspd=0, cs=0, csd=175, ar=0, mr=0, hp=0,
+    def __init__(self, name, level=1, ad=0, ap=0,base_aspd=0, as_ratio=0, cs=0, csd=175, ar=0, mr=0, hp=0,
                  ad_growth=0, ap_growth=0, aspd_growth=0, ar_growth=0, mr_growth=0, hp_growth=0) -> None:
 
         self.base_stats = Stats(ad=ad, ap=ap,cs=cs, csd=csd, 
@@ -23,6 +23,7 @@ class Champion:
         self.mr_growth = mr_growth
         self.hp_growth = hp_growth
         self.base_aspd = base_aspd
+        self.as_ratio =  base_aspd if as_ratio == 0 else as_ratio #if the as_ratio is not set then its base_aspd
 
         self.name = name
         self.level = level
@@ -63,3 +64,7 @@ TargetDummy = partial(Champion, name="Target Dummy", hp=1000)
 # create a partial function from the champion 
 Aatrox = partial(Champion,name="Aatrox", ad=60, ad_growth=5, hp=580, hp_growth=90, ar=38,
                   ar_growth=3.25, mr=32, mr_growth=1.25, base_aspd=0.651, aspd_growth=2.5)
+
+
+Caitlynn = partial(Champion, name="Caitlynn", ad=62, ad_growth=3.8, hp=510, hp_growth=93, ar=28,
+                  ar_growth=3.5, mr=30, mr_growth=0.5, base_aspd=0.681, aspd_growth=0.568)

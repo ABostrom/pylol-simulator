@@ -33,6 +33,10 @@ class Summoner:
         return self.champion.base_aspd
 
     @property
+    def as_ratio(self):
+        return self.champion.as_ratio
+
+    @property
     def aspd(self):
         return self.champion.aspd + self.inventory.aspd
 

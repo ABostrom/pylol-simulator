@@ -35,8 +35,8 @@ def calculate_mitigation(damage:float, resist:float):
     return 100 / (100 + resist) * damage
 
 
-def calculate_apsd(base_aspd, bonus_aspd):
-    return base_aspd * (1 + bonus_aspd / 100)
+def calculate_apsd(base_aspd, as_ratio, bonus_aspd):
+    return base_aspd + (as_ratio * bonus_aspd / 100)
 
 def basic_attack(attacker: Summoner, defender: Summoner):
     # basic attacks are 100% of total ad.
@@ -52,7 +52,7 @@ def basic_attack(attacker: Summoner, defender: Summoner):
 
 time_since_last_attack = 0
 last_time = 0
-def swing_timer(summoner: Summoner, time:float=0):
+def swing_timer(attacker: Summoner, defender: Summoner, time:float=0):
 
     global last_time
     global time_since_last_attack
@@ -68,13 +68,13 @@ def swing_timer(summoner: Summoner, time:float=0):
 
     # need to check the swing timer, against this frequency
     # TODO: tidy up this with bonus aspd from summoner.
-    frequency = 1.0 / calculate_apsd(summoner.base_aspd, summoner.aspd)
+    frequency = 1.0 / calculate_apsd(attacker.base_aspd, attacker.as_ratio, attacker.aspd)
 
     # if its been longer than our freqency since our last attack, we're good to go.
     # or if time is 0 then we can attack instantly.
     if time_since_last_attack >=  frequency or time_since_last_attack == 0:
 
-        damage = basic_attack(summoner)
+        damage = basic_attack(attacker, defender)
         #reset the swing timer.
         time_since_last_attack = 0
     else:
