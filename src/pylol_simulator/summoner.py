@@ -17,6 +17,10 @@ class Summoner:
         self.current_hp = self.hp
 
     @property
+    def level(self):
+        return self.champion.level
+
+    @property
     def base_ad(self):
         return self.champion.ad
 
@@ -68,6 +72,24 @@ class Summoner:
     @property
     def hp(self):
         return self.champion.hp + self.inventory.hp
+
+    @property
+    def lethality(self):
+        return self.inventory.lethality
+
+    @property
+    def f_mrp(self):
+        return self.inventory.f_mrp
+
+    @property
+    def arp(self):
+        return self.inventory.arp
+
+    @property
+    def mrp(self):
+        return self.inventory.mrp
+
+
 
 
     def __str__(self) -> str:

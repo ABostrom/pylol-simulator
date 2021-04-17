@@ -30,6 +30,23 @@ class Damage:
         return f"Total:\t{self.get_total_damage()}\nTrue:\t{self.true}\nPhys:\t{self.physical}\nMagic:\t{self.magic}"
 
 
+    def get_mitigated_damage(self, attacker:Summoner, defender: Summoner) -> Damage:
+        #TODO: Consider about armour reduction, and base armour + bonus armour
+        d_ar = (defender.ar * (1 - (attacker.arp / 100))) - calculate_flat_armour_pen(attacker.lethality, attacker.level)
+        
+        print(attacker.arp)
+        print(d_ar)
+
+        #TODO: Consider how magic pen interacts with magic resist
+        d_mr = (defender.mr * (1 - (attacker.mrp / 100))) - attacker.f_mrp
+
+        return Damage(physical_damage=calculate_mitigation(self.physical, d_ar),
+                      magic_damage=calculate_mitigation(self.magic, d_mr),
+                      true_damage=self.true)
+
+def calculate_flat_armour_pen(lethality: float, level: int):
+    return lethality * (0.6 + 0.4 * level / 18)
+
 # this formula is the same for armour and magic resistance
 def calculate_mitigation(damage:float, resist:float):
     return 100 / (100 + resist) * damage
@@ -43,15 +60,15 @@ def basic_attack(attacker: Summoner, defender: Summoner):
 
     # TODO: Crit chance/Crit Damage
     # TODO: trigger on hit passives
-    basic = Damage(physical_damage=attacker.ad) #+ summoner.
+    basic = Damage(physical_damage=attacker.ad)
     passives = attacker.inventory.get_all_unique_passives()
     output = basic + sum([passive.on_basic_attack(attacker, defender) for passive in passives], Damage())
 
 
     # TODO: need to calculate mitigation.
+    mitigated_output = output.get_mitigated_damage(attacker, defender)
 
-
-    return output
+    return mitigated_output
 
 
 time_since_last_attack = 0

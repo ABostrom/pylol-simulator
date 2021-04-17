@@ -53,6 +53,7 @@ from .modifiers import SteelTipped
 from .modifiers import IcathianBite
 from .modifiers import SpellBlade
 from .modifiers import BringItDown
+from .modifiers import GiantSlayer
 
 '''AD Base Items'''
 Long_Sword = Item("Long Sword", 350, Stats(ad=10))
@@ -83,8 +84,9 @@ ChainVest = Item("Chain Vest", 800, Stats(ar=40))
 NullMagicMantle = Item("Null-Magic Mantle", 450, Stats(mr=25))
 NegatronCloak = Item("Negatron Cloak", 900, Stats(mr=50))
 
-
+'''marksmen items'''
 KrakenSlayer = Item("Kraken Slayer", 3400, Stats(ad=65, aspd=25, cs=20), passives=[BringItDown()])
+LordDominiksRegards = Item("Lord Dominik's Regards", 3000, Stats(ad=30,cs=20,arp=35), passives=[GiantSlayer()])
 
 Sheen = Item("Sheen", 700, Stats(), passives=[SpellBlade()])
 

@@ -108,3 +108,14 @@ class BringItDown(Passive):
             self.count += 1
 
         return Damage(true_damage=tr_damage)
+
+
+class GiantSlayer(Passive):
+
+    def __init__(self) -> None:
+        super().__init__("Giant Slayer", True)
+
+    def on_basic_attack(self, attacker:Summoner, defender:Summoner):
+        damage = min(int(max(defender.hp - attacker.hp, 0) / 100), 15) * 0.075 * defender.hp
+        return Damage(physical_damage=damage)
+    
