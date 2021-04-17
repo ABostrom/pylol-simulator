@@ -33,10 +33,7 @@ class Damage:
     def get_mitigated_damage(self, attacker:Summoner, defender: Summoner) -> Damage:
         #TODO: Consider about armour reduction, and base armour + bonus armour
         d_ar = (defender.ar * (1 - (attacker.arp / 100))) - calculate_flat_armour_pen(attacker.lethality, attacker.level)
-        
-        print(attacker.arp)
-        print(d_ar)
-
+    
         #TODO: Consider how magic pen interacts with magic resist
         d_mr = (defender.mr * (1 - (attacker.mrp / 100))) - attacker.f_mrp
 
