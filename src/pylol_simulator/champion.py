@@ -67,4 +67,4 @@ Aatrox = partial(Champion,name="Aatrox", ad=60, ad_growth=5, hp=580, hp_growth=9
 
 
 Caitlynn = partial(Champion, name="Caitlynn", ad=62, ad_growth=3.8, hp=510, hp_growth=93, ar=28,
-                  ar_growth=3.5, mr=30, mr_growth=0.5, base_aspd=0.681, aspd_growth=0.568)
+                  ar_growth=3.5, mr=30, mr_growth=0.5, base_aspd=0.681, aspd_growth=4, as_ratio=0.568)

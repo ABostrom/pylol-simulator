@@ -47,6 +47,10 @@ def basic_attack(attacker: Summoner, defender: Summoner):
     passives = attacker.inventory.get_all_unique_passives()
     output = basic + sum([passive.on_basic_attack(attacker, defender) for passive in passives], Damage())
 
+
+    # TODO: need to calculate mitigation.
+
+
     return output
 
 
@@ -67,7 +71,6 @@ def swing_timer(attacker: Summoner, defender: Summoner, time:float=0):
     time_since_last_attack += delta_time
 
     # need to check the swing timer, against this frequency
-    # TODO: tidy up this with bonus aspd from summoner.
     frequency = 1.0 / calculate_apsd(attacker.base_aspd, attacker.as_ratio, attacker.aspd)
 
     # if its been longer than our freqency since our last attack, we're good to go.

@@ -15,7 +15,6 @@ class Item:
         self.cost = cost
         self.stat = stat
         self.passives = passives if passives != None else []
-        print(self.passives)
 
     def __str__(self) -> str:
         return f"{self.name} | {self.cost}g\n{self.stat}"
@@ -53,6 +52,7 @@ class Inventory:
 from .modifiers import SteelTipped
 from .modifiers import IcathianBite
 from .modifiers import SpellBlade
+from .modifiers import BringItDown
 
 '''AD Base Items'''
 Long_Sword = Item("Long Sword", 350, Stats(ad=10))
@@ -84,6 +84,7 @@ NullMagicMantle = Item("Null-Magic Mantle", 450, Stats(mr=25))
 NegatronCloak = Item("Negatron Cloak", 900, Stats(mr=50))
 
 
+KrakenSlayer = Item("Kraken Slayer", 3400, Stats(ad=65, aspd=25, cs=20), passives=[BringItDown()])
 
 Sheen = Item("Sheen", 700, Stats(), passives=[SpellBlade()])
 

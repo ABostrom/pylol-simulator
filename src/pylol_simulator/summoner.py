@@ -24,6 +24,11 @@ class Summoner:
     def ad(self):
         return self.champion.ad + self.inventory.ad
 
+    #TODO: this will be updated later to reflect when champions can buff there bonus ad.
+    @property
+    def bonus_ad(self):
+        return self.inventory.ad
+
     @property
     def ap(self):
         return self.champion.ap + self.inventory.ap
@@ -66,5 +71,9 @@ class Summoner:
 
 
     def __str__(self) -> str:
-        return f"{self.champion.name}@{self.champion.level}\nAD   {self.ad}\tAP {self.ap}\nAR   {self.ar}\tMR {self.mr}\nASPD {self.aspd}\tAH {self.ah}\n"
+        return f"{self.champion.name}@{self.champion.level}\n\
+                HP   {self.hp}\t\n\
+                AD   {self.ad}\tAP {self.ap}\n\
+                AR   {self.ar}\tMR {self.mr}\n\
+                ASPD {self.aspd}\tAH {self.ah}\n"
 

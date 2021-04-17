@@ -74,6 +74,7 @@ class Siphon(Passive):
 '''Sheen Passive'''
 class SpellBlade(Passive):
 
+    # TODO: consider how these effects timeout.
     def __init__(self) -> None:
         super().__init__("Spell Blade", True)
         self.active = False
@@ -91,3 +92,19 @@ class SpellBlade(Passive):
 
 
 
+class BringItDown(Passive):
+    # TODO: consider how these effects/stacks timeout.
+    # TODO: probs need a buff/debuffs system
+    def __init__(self) -> None:
+        super().__init__("Bring It Down", True)
+        self.count = 0
+
+    def on_basic_attack(self, attacker:Summoner, defender:Summoner):
+        tr_damage = 0
+        if self.count >= 2:
+            self.count = 0
+            tr_damage = 60 + (0.45 * attacker.bonus_ad)
+        else:
+            self.count += 1
+
+        return Damage(true_damage=tr_damage)
