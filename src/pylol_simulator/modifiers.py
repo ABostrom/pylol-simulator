@@ -15,7 +15,12 @@ class Passive:
         self.name = name
         self.unique = unique
 
+    # called when the owner of this item attacks
     def on_basic_attack(self, attacker:Summoner, defender:Summoner):
+        pass
+
+    # called when the owner of this item casts an ability
+    def on_ability_used(): 
         pass
 
     def __eq__(self, o: Passive) -> bool:
@@ -64,6 +69,25 @@ class Siphon(Passive):
     def on_basic_attack(self, attacker:Summoner, defender:Summoner):
         pass
 
+
+
+'''Sheen Passive'''
+class SpellBlade(Passive):
+
+    def __init__(self, name:str, unique:bool) -> None:
+        super().__init__(name, unique)
+        self.active = False
+
+    def on_ability_used(self): 
+        self.active = True
+
+    def on_basic_attack(self, attacker:Summoner, defender:Summoner):
+        damage = 0
+        if self.active:
+            damage = attacker.base_ad
+
+        self.active = False
+        return Damage(physical_damage=damage)
 
 
 

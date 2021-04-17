@@ -60,6 +60,6 @@ from functools import partial
 
 TargetDummy = partial(Champion, name="Target Dummy", hp=1000)
 
-# create a partial func1tion from the champion 
+# create a partial function from the champion 
 Aatrox = partial(Champion,name="Aatrox", ad=60, ad_growth=5, hp=580, hp_growth=90, ar=38,
                   ar_growth=3.25, mr=32, mr_growth=1.25, base_aspd=0.651, aspd_growth=2.5)

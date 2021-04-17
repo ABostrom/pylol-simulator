@@ -52,6 +52,7 @@ class Inventory:
 
 from .modifiers import SteelTipped
 from .modifiers import IcathianBite
+from .modifiers import SpellBlade
 
 '''AD Base Items'''
 Long_Sword = Item("Long Sword", 350, Stats(ad=10))
@@ -82,5 +83,8 @@ ChainVest = Item("Chain Vest", 800, Stats(ar=40))
 NullMagicMantle = Item("Null-Magic Mantle", 450, Stats(mr=25))
 NegatronCloak = Item("Negatron Cloak", 900, Stats(mr=50))
 
+
+
+Sheen = Item("Sheen", 700, Stats(), passives=[SpellBlade()])
 
 NashorsTooth = Item("Nashor's Tooth", 3000, Stats(ap=100, aspd=50), passives=[IcathianBite()])

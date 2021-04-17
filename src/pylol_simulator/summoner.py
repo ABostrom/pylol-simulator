@@ -17,6 +17,10 @@ class Summoner:
         self.current_hp = self.hp
 
     @property
+    def base_ad(self):
+        return self.champion.ad
+
+    @property
     def ad(self):
         return self.champion.ad + self.inventory.ad
 
