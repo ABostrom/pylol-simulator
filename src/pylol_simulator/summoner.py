@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from .champion import Champion
+    from .buff import Buff
 
 from .item import Inventory
 #from .rune import Rune
@@ -15,6 +16,16 @@ class Summoner:
         self.champion = champion
         self.inventory = inventory if inventory is not None else Inventory()
         self.current_hp = self.hp
+        self.current_buffs = []
+
+    
+    # TODO: need to think about how buffs interact with stats etc,
+    # how we might gather up bonus stats or effects during attacks.
+    def add_buff(self, buff: Buff):
+        self.current_buffs.append(buff)
+
+    def remove_buff(self, buff: Buff):
+        self.current_buffs.remove(buff)
 
     @property
     def level(self):

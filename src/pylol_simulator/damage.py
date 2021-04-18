@@ -57,12 +57,12 @@ def basic_attack(attacker: Summoner, defender: Summoner):
 
     # TODO: Crit chance/Crit Damage
     # TODO: trigger on hit passives
+    # TODO: consider how buffs interact here too.
+    # attacker.current_buffs
     basic = Damage(physical_damage=attacker.ad)
     passives = attacker.inventory.get_all_unique_passives()
     output = basic + sum([passive.on_basic_attack(attacker, defender) for passive in passives], Damage())
 
-
-    # TODO: need to calculate mitigation.
     mitigated_output = output.get_mitigated_damage(attacker, defender)
 
     return mitigated_output

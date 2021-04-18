@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 from numpy.lib.arraysetops import unique
 if TYPE_CHECKING:
     from .summoner import Summoner
+    from .buff import Buff
 
 from .damage import Damage
 
@@ -20,7 +21,7 @@ class Passive:
         pass
 
     # called when the owner of this item casts an ability
-    def on_ability_used(): 
+    def on_ability_used(attacker: Summoner): 
         pass
 
     def __eq__(self, o: Passive) -> bool:
@@ -28,6 +29,16 @@ class Passive:
 
     def __hash__(self) -> int:
         return hash((self.name, self.unique))
+
+
+class SpawnBuff(Passive):
+    def __init__(self, toSpawn: Buff) -> None:
+        super().__init__("Spawn Buff", False)
+        self.buff = toSpawn
+
+    def on_ability_used(self,attacker: Summoner):
+        attacker.add_buff(self.toSpawn)
+
 
 '''Recurve Bow Passives'''
 
@@ -68,28 +79,6 @@ class Siphon(Passive):
     # TODO: Need a buff/debuff system
     def on_basic_attack(self, attacker:Summoner, defender:Summoner):
         pass
-
-
-
-'''Sheen Passive'''
-class SpellBlade(Passive):
-
-    # TODO: consider how these effects timeout.
-    def __init__(self) -> None:
-        super().__init__("Spell Blade", True)
-        self.active = False
-
-    def on_ability_used(self): 
-        self.active = True
-
-    def on_basic_attack(self, attacker:Summoner, defender:Summoner):
-        damage = 0
-        if self.active:
-            damage = attacker.base_ad
-
-        self.active = False
-        return Damage(physical_damage=damage)
-
 
 
 class BringItDown(Passive):

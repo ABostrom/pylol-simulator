@@ -51,7 +51,7 @@ class Inventory:
 
 from .modifiers import SteelTipped
 from .modifiers import IcathianBite
-from .modifiers import SpellBlade
+from .modifiers import SpawnBuff
 from .modifiers import BringItDown
 from .modifiers import GiantSlayer
 
@@ -88,6 +88,12 @@ NegatronCloak = Item("Negatron Cloak", 900, Stats(mr=50))
 KrakenSlayer = Item("Kraken Slayer", 3400, Stats(ad=65, aspd=25, cs=20), passives=[BringItDown()])
 LordDominiksRegards = Item("Lord Dominik's Regards", 3000, Stats(ad=30,cs=20,arp=35), passives=[GiantSlayer()])
 
-Sheen = Item("Sheen", 700, Stats(), passives=[SpellBlade()])
+''' Sheen Items '''
+from .buff import SheenSpellBlade, TriforceSpellBlade, LichBaneSpellBlade
+Sheen = Item("Sheen", 700, Stats(), passives=[SpawnBuff(toSpawn=SheenSpellBlade())])
+Triforce = Item("Trinity Force", 3333, Stats(ad=30, ah=20, aspd=30, hp=200), passives=[SpawnBuff(toSpawn=TriforceSpellBlade())])
+# TODO: MS
+LichBane = Item("Lich Bane", 3000, Stats(ap=70), passives=[SpawnBuff(toSpawn=LichBaneSpellBlade())])
+
 
 NashorsTooth = Item("Nashor's Tooth", 3000, Stats(ap=100, aspd=50), passives=[IcathianBite()])
