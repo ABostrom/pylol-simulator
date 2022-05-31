@@ -61,6 +61,27 @@ class SheenSpellBlade(Buff):
         #100% of base ad
         return Damage(physical_damage=attacker.base_ad)
 
+# Divine Sunderer
+class SundererSpellBlade(Buff):
+    def __init__(self) -> None:
+        super().__init__("Spell Blade", duration=10.0, consumes_on_atk=True)
+
+    def on_basic_attack(self, attacker: Summoner, defender: Summoner):
+        #150% of base ad
+        return Damage(physical_damage=attacker.base_ad * 1.5)
+
+# Essence Reaver
+class ReaverSpellBlade(Buff):
+
+    def __init__(self):
+        super().__init__("Essence Reaver", duration=10.0, consumes_on_atk=True)
+
+    def on_basic_attack(self, attacker: Summoner, defender: Summoner):
+        forty_percent = attacker.base_ad * 0.4
+        sixteen_percent = attacker.base_ad * 0.16
+        attacker.champion.mana += (forty_percent + sixteen_percent)
+        return Damage(physical_damage=attacker.base_ad + forty_percent)
+
 
 class TriforceSpellBlade(Buff):
     def __init__(self) -> None:
